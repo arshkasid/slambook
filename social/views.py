@@ -198,7 +198,7 @@ class AddDisLike(LoginRequiredMixin, View):
         is_like = False
 
         for like in post.likes.all():
-            if like == request.user:
+             if like == request.user:
                 is_like = True
                 break
 

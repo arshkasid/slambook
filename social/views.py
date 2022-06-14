@@ -191,7 +191,7 @@ class AddLike(LoginRequiredMixin, View):
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
 
-class AddDislike(LoginRequiredMixin, View):
+class AddDisLike(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         post = Post.objects.get(pk=pk)
 

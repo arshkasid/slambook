@@ -7,6 +7,8 @@ class PostForm(forms.ModelForm):
         'placeholder':'say somthing...'
     }))
 
+    image = forms.ImageField(required=False)
+
     class Meta:
         model = Post
         fields = ['body']

@@ -11,7 +11,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['body']
+        fields = ['body','image']
 
 class CommentForm(forms.ModelForm):
     comment = forms.CharField(label='',widget=forms.Textarea(attrs={

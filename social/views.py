@@ -1,3 +1,4 @@
+from contextvars import Context
 import imp
 from multiprocessing import context
 from webbrowser import get
@@ -14,7 +15,10 @@ from django.views.generic.edit import UpdateView, DeleteView
 
 class PostListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        posts = Post.objects.all().order_by('-created_on')
+        logged_in_user = request.user
+        posts = Post.objects.filter(
+author__profile__followers__in=[logged_in_user.id]
+        ).order_by('-created_on')
         form = PostForm()
 
         context = {
@@ -235,3 +239,14 @@ class UserSearch(View):
             'profile_list': profile_list,
         }
         return render(request, 'social/search.html',context)
+
+class ListFollowers(View):
+    def get(self, request, pk , *args, **kwargs):
+        profile = UserProfile.objects.get(pk=pk)
+        followers = profile.followers.all()
+
+        context ={
+            'profile':profile,
+            'followers':followers,
+        }
+        return render(request, 'social/followers_list.html',context)
